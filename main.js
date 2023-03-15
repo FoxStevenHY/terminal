@@ -1,7 +1,10 @@
 const {app, BrowserWindow, ipcMain} = require("electron");
+
 const pty = require("node-pty");
 const os = require("os");
 var shell = os.platform() === "win32" ? "powershell.exe" : "bash";
+
+app.commandLine.appendSwitch('in-process-gpu');
 
 let mainWindow;
 function createWindow() {
@@ -40,9 +43,7 @@ function createWindow() {
 
 
 }
-
 app.on("ready", createWindow);
-
 app.on("window-all-closed", function() {
     if (process.platform !== "darwin") {
         app.quit();
